@@ -48,6 +48,8 @@ public enum TokenType {
 	HASHTAG,           // #
 	QUOTATION_MARKS,   // "" || ''
 	COMMENTARY,       // --
+	CONCAT,				// ..
+	
 
 	// Functions
 	READ,             // read
