@@ -22,8 +22,8 @@ public enum TokenType {
 	LOWER_EQUAL,   // <=
 	GREATER,       // >
 	GREATER_EQUAL, // >=
-	AND,           // &&
-	OR,            // ||
+	AND,           // and
+	OR,            // or
 	TRUE,          // true
 	FALSE,         // false
 
@@ -32,7 +32,7 @@ public enum TokenType {
 	SUB,           // -
 	MUL,           // *
 	DIV,           // /
-	MOD,
+	MOD,					 // %
 
 	// Symbols
 	SEMICOLON,         // ;
@@ -47,6 +47,7 @@ public enum TokenType {
 	ASSIGN,            // =
 	HASHTAG,           // #
 	QUOTATION_MARKS,   // "" || ''
+	COMMENTARY,       // --
 
 	// Functions
 	READ,             // read
