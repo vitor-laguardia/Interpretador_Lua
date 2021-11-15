@@ -35,7 +35,7 @@ public class LexicalAnalysis implements AutoCloseable {
   public Lexeme nextToken() {
     Lexeme lexeme = new Lexeme("", TokenType.END_OF_FILE);
 
-    int state = 1;
+    int state = 11;
     while(state != 17 && state != 18) {
       int c = getc();
       switch(state) {
@@ -61,8 +61,20 @@ public class LexicalAnalysis implements AutoCloseable {
         case 7:
           break;
         case 8:
+          if(c == '[') {
+            lexeme.token += (char) c;
+            state = 1;
+          }
+          else if ( c == '-') {
+            lexeme.token += (char) c;
+            state = 6;
+          }
+          else {
+            state = 5; 
+          }
           break;
         case 9:
+         
           break;
         case 10:
           if(c == 'c') {
@@ -102,18 +114,18 @@ public class LexicalAnalysis implements AutoCloseable {
           break;
         case 16:
           break;
-        case 17:
-          break;
-        case 18:
-          break;
         default:
           throw new LexicalException("Unreachable");
       }
     }
 
-    if(state == 17) 
+    if(state == 17){
       lexeme.type = symbolTable.find(lexeme.token);
+      System.out.println(lexeme.token + " " + lexeme.type);
 
+    } 
+
+    System.out.println(lexeme);
     return lexeme;
   }
   
