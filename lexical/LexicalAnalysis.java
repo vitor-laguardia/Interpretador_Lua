@@ -59,6 +59,22 @@ public class LexicalAnalysis implements AutoCloseable {
         case 6:
           break;
         case 7:
+          if ( c == '-') {
+            lexeme.token += (char) c;
+            state = 7;
+          }
+          else if ( c == ']') {
+            lexeme.token += (char) c;
+            state = 8;
+          }
+          else if ( c == -1) {
+            lexeme.type = TokenType.END_OF_FILE;
+            state = 17;
+          }
+          else {
+            ungetc(c);
+            state = 17;
+          }
           break;
         case 8:
           if(c == '[') {
@@ -74,7 +90,17 @@ public class LexicalAnalysis implements AutoCloseable {
           }
           break;
         case 9:
-         
+         if (c == '\n') {
+            line++;
+            state = 1;
+         }
+         else if (c == -1) {
+          lexeme.type = TokenType.END_OF_FILE;
+          state = 17;
+         }
+         else {
+           state = 9;
+         }
           break;
         case 10:
           if(c == 'c') {
