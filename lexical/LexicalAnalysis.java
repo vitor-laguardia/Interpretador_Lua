@@ -51,12 +51,59 @@ public class LexicalAnalysis implements AutoCloseable {
           }
           break;
         case 3:
+          if(c == '[') {
+            lexeme.token += (char) c;
+            state = 4;
+          } else if(c == -1) {
+            lexeme.type = TokenType.UNEXPECTED_EOF;
+            state = 17;
+          } else {
+            lexeme.type = TokenType.INVALID_TOKEN;
+            state = 17;
+          }
           break;
         case 4:
+          if(c == '[') {
+            lexeme.token += (char) c;
+            state = 5;
+          } else if(c == '\n') {
+            line++;
+            state = 1;
+          } else if(c == -1) {
+            lexeme.type = TokenType.UNEXPECTED_EOF;
+            state = 17;
+          } else {
+            lexeme.type = TokenType.INVALID_TOKEN;
+            state = 17;
+          }
           break;
         case 5:
+          if(c != '-') {
+            state = 5;
+          } else if(c == '-') {
+            lexeme.token += (char) c;
+            state = 6;
+          } else if(c == -1) {
+            lexeme.type = TokenType.UNEXPECTED_EOF;
+            state = 17;
+          } else {
+            lexeme.type = TokenType.INVALID_TOKEN;
+            state = 17;
+          }
           break;
         case 6:
+          if(c != '-') {
+            state = 5;
+          } else if(c == '-') {
+            lexeme.token += (char) c;
+            state = 7;
+          } else if(c == -1) {
+            lexeme.type = TokenType.UNEXPECTED_EOF;
+            state = 17;
+          } else {
+            lexeme.type = TokenType.INVALID_TOKEN;
+            state = 17;
+          }
           break;
         case 7:
           if ( c == '-') {
