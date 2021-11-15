@@ -40,6 +40,54 @@ public class LexicalAnalysis implements AutoCloseable {
       int c = getc();
       switch(state) {
         case 1:
+          if ( Character.isDigit(c)) {
+            lexeme.token += (char) c;
+            state = 15;
+          }
+          else if ( c == '"') {
+            lexeme.token += (char) c;
+            state = 14;
+          }
+          else if ( c == '_' || Character.isLetter(c)) {
+            lexeme.token += (char) c;
+            state = 13;
+          }
+          else if ( c == '.') {
+            lexeme.token += (char) c;
+            state = 12;
+          }
+          else if ( c == '~') {
+            lexeme.token += (char) c;
+            state = 11;   
+          }
+          else if ( c == '=' || c == '<' || c == '>') {
+            lexeme.token += (char) c;
+            state = 10;   
+          }
+          else if ( c == '-') {
+            lexeme.token += (char) c;
+            state = 2;  
+          }
+          else if ( c == ' ' || c == '\t' || c == '\r') {
+            state = 1;
+          }
+          else if ( c == '\n') {
+            line++;
+            state = 1;  
+          }
+          else if ( c == ';' || c == ',' || c == '+' || c == '*' || c == '/' || c == '%' || c == '#' || c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}') {
+            lexeme.token += (char) c;
+            state = 17;  
+          }
+          else if ( c == -1) {
+            lexeme.type = TokenType.END_OF_FILE;
+            state = 18;
+          }
+          else {
+            lexeme.token += (char) c;
+            lexeme.type = TokenType.INVALID_TOKEN;
+            state = 18;
+          }
           break;
         case 2:
           if(c == '-'){
