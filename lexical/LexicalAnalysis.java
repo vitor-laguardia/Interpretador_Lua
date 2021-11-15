@@ -95,12 +95,46 @@ public class LexicalAnalysis implements AutoCloseable {
           }
           break;
         case 13:
+          if(Character.isLetter(c) 
+            || Character.isDigit(c)
+            || c == '_'
+          ) {
+            lexeme.token += (char) c;
+            state = 13;
+          } else {
+            ungetc(c);
+            state = 17;
+          }
           break;
         case 14:
+          if(c != '"') {
+            state = 14;
+          } else if(c == '"') {
+            lexeme.token += (char) c;
+            state = 18;
+          }
           break;
         case 15:
+          if(Character.isDigit(c)) {
+            lexeme.token += (char) c;
+            state = 15;
+          } else if(c == '.') {
+            lexeme.token += (char) c;
+            state = 16;
+          } else {
+            ungetc(c);
+            state = 18;
+          }
           break;
         case 16:
+          if(Character.isDigit(c)) {
+            lexeme.token += (char) c;
+            state = 16;
+          } else {
+            lexeme.type = TokenType.NUMBER;
+            ungetc(c);
+            state = 18;
+          }
           break;
         case 17:
           break;
