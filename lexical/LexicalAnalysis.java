@@ -94,19 +94,18 @@ public class LexicalAnalysis implements AutoCloseable {
           break;
         case 3:
           if(c == '[') {
-            lexeme.token += (char) c;
             state = 4;
-          } else if(c == -1) {
-            lexeme.type = TokenType.UNEXPECTED_EOF;
-            state = 17;
-          } else {
-            lexeme.type = TokenType.INVALID_TOKEN;
-            state = 17;
+          } 
+          else if ( c == '\n') {
+            state = 1;
+            line++;
+          }
+          else {
+            state = 9;
           }
           break;
         case 4:
           if(c == '[') {
-            lexeme.token += (char) c;
             state = 5;
           } else if(c == '\n') {
             line++;
@@ -123,7 +122,6 @@ public class LexicalAnalysis implements AutoCloseable {
           if(c != '-') {
             state = 5;
           } else if(c == '-') {
-            lexeme.token += (char) c;
             state = 6;
           } else if(c == -1) {
             lexeme.type = TokenType.UNEXPECTED_EOF;
@@ -137,7 +135,6 @@ public class LexicalAnalysis implements AutoCloseable {
           if(c != '-') {
             state = 5;
           } else if(c == '-') {
-            lexeme.token += (char) c;
             state = 7;
           } else if(c == -1) {
             lexeme.type = TokenType.UNEXPECTED_EOF;
@@ -149,11 +146,9 @@ public class LexicalAnalysis implements AutoCloseable {
           break;
         case 7:
           if ( c == '-') {
-            lexeme.token += (char) c;
             state = 7;
           }
           else if ( c == ']') {
-            lexeme.token += (char) c;
             state = 8;
           }
           else if ( c == -1) {
@@ -166,12 +161,10 @@ public class LexicalAnalysis implements AutoCloseable {
           }
           break;
         case 8:
-          if(c == '[') {
-            lexeme.token += (char) c;
-            state = 1;
+          if(c == ']') {
+            state = 17;
           }
           else if ( c == '-') {
-            lexeme.token += (char) c;
             state = 6;
           }
           else {
@@ -181,7 +174,7 @@ public class LexicalAnalysis implements AutoCloseable {
         case 9:
          if (c == '\n') {
             line++;
-            state = 1;
+            state = 17;
          }
          else if (c == -1) {
           lexeme.type = TokenType.END_OF_FILE;
@@ -236,6 +229,7 @@ public class LexicalAnalysis implements AutoCloseable {
         case 14:
           if(c != '"') {
             state = 14;
+            lexeme.token += (char) c;
           } else if(c == '"') {
             lexeme.token += (char) c;
             lexeme.type = TokenType.QUOTATION_MARKS;
