@@ -228,7 +228,7 @@ public class LexicalAnalysis implements AutoCloseable {
           break;
         case 14:
           if(c != '"') {
-            state = 14;
+            state = 19;
             lexeme.token += (char) c;
           } else if(c == '"') {
             lexeme.token += (char) c;
@@ -255,6 +255,16 @@ public class LexicalAnalysis implements AutoCloseable {
             state = 16;
           } else {
             lexeme.type = TokenType.NUMBER;
+            ungetc(c);
+            state = 18;
+          }
+        case 19:
+          if ( c != '"') {
+            state = 19;
+            lexeme.token += (char) c;
+          }
+          else {
+            lexeme.type = TokenType.STRING;
             ungetc(c);
             state = 18;
           }
