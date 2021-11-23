@@ -65,4 +65,5 @@ public enum TokenType {
 	NUMBER,           		// type numeric
 	VAR,              		// string
 	NIL,              		// null
+	STRING,					// string
 }
