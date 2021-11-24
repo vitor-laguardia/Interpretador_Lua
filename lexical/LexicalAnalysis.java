@@ -45,7 +45,6 @@ public class LexicalAnalysis implements AutoCloseable {
             state = 15;
           }
           else if(c == '"') {
-            lexeme.token += (char) c;
             state = 14;
           } else if(c == '_' || Character.isLetter(c)) {
             lexeme.token += (char) c;
@@ -231,9 +230,14 @@ public class LexicalAnalysis implements AutoCloseable {
             state = 19;
             lexeme.token += (char) c;
           } else if(c == '"') {
-            lexeme.token += (char) c;
-            lexeme.type = TokenType.QUOTATION_MARKS;
+            lexeme.type = TokenType.STRING;
             state = 18;
+          } else if ( c == '\n') {
+            line++;
+            state = 14;
+          } else if (c == -1) {
+            lexeme.type = TokenType.UNEXPECTED_EOF;
+            state = 17;   
           }
           break;
         case 15:
