@@ -135,7 +135,30 @@ public class SyntaticAnalysis {
   private void procLValue() { }
 
   // <rvalue> ::= <const> | <function> | <table> | <lvalue>
-  private void procRValue() { }
+  private void procRValue() {
+    if (current.type == TokenType.NUMBER ||
+          current.type == TokenType.STRING ||
+            current.type == TokenType.FALSE ||
+              current.type == TokenType.TRUE ||
+                current.type == TokenType.NIL) {
+                  procConst();
+                }
+    else if (current.type == TokenType.READ ||
+              current.type == TokenType.TO_NUMBER ||
+                current.type == TokenType.TO_STRING) {
+                  procFunction();
+    }
+    else if (current.type == TokenType.OPEN_BRACKET) {
+      procTable();
+    }
+    else if (current.type == TokenType.VAR) {
+      procName();
+    }
+    else {
+      showError();
+    }
+    
+  }
 
   // <const> ::= <number> | <string> | false | true | nil
   private void procConst() { 
