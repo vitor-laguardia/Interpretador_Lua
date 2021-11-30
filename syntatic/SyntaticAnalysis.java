@@ -56,7 +56,13 @@ public class SyntaticAnalysis {
   private void procIf() { }
 
   // <while> ::= while <expr> do <code> end
-  private void procWhile() { }
+  private void procWhile() {
+    eat(TokenType.WHILE);
+    procExpr();
+    eat(TokenType.DO);
+    procCode();
+    eat(TokenType.END);
+  }
 
   // <repeat> ::= repeat <code> until <expr>
   private void procRepeat() {
