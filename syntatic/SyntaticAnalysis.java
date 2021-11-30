@@ -46,56 +46,82 @@ public class SyntaticAnalysis {
     System.exit(1);
   }
 
-  // <program>   ::= program <cmdlist>
-  private void procProgram() {
+  // <code> ::= { <cmd> }
+  private void procCode() { }
 
-   }
-
-  // <cmdlist>   ::= <cmd> { <cmd> }
-  private void procCmdList() { }
-
-  // <cmd>       ::= (<assign> | <output> | <if> | <while>) ;
+  // <cmd> ::= (<if> | <while> | <repeat> | <for> | <print> | <assign>) [';']
   private void procCmd() { }
 
-  // <assign>    ::= <var> = <intexpr>
-  private void procAssign() { }
-
-  // <output>    ::= output <intexpr>
-  private void procOutput() { }
-
-  // <if>        ::= if <boolexpr> then <cmdlist> [ else <cmdlist> ] done
+  // <if> ::= if <expr> then <code> { elseif <expr> then <code> } [ else <code> ] end
   private void procIf() { }
 
-  // <while>     ::= while <boolexpr> do <cmdlist> done
+  // <while> ::= while <expr> do <code> end
   private void procWhile() { }
 
-  // <boolexpr>  ::= false | true |
-  //                 not <boolexpr> |
-  //                 <intterm> (== | != | < | > | <= | >=) <intterm>
-  private void procBoolExpr() { }
-
-  // <intexpr>   ::= [ + | - ] <intterm> [ (+ | - | * | / | %) <intterm> ]
-  private void procIntExpr() { }
-
-  // <intterm>   ::= <var> | <const> | read
-  private void procIntTerm() { }
-
-  // <var>       ::= id
-  private void procVar() { }
-
-  // <const>     ::= number
-  private void procConst() { }
-
-  private void procName() { 
-    eat(TokenType.VAR);
+  // <repeat> ::= repeat <code> until <expr>
+  private void procRepeat() {
   }
 
-  private void procNumber() { 
-    eat(TokenType.NUMBER);
+  // <for> ::= for <name> (('=' <expr> ',' <expr> [',' <expr>]) | ([',' <name>] in <expr>)) do <code> end
+  private void procFor() {
+  }
+
+  // <print> ::= print '(' [ <expr> ] ')'
+  private void procPrint() {
+  }
+
+  // <assign> ::= <lvalue> { ',' <lvalue> } '=' <expr> { ',' <expr> }
+  private void procAssign() { }
+
+  // <expr> ::= <rel> { (and | or) <rel> }
+  private void procExpr() { }
+
+  // <rel> ::= <concat> [ ('<' | '>' | '<=' | '>=' | '~=' | '==') <concat> ]
+  private void procRel() { }
+
+  // <concat> ::= <arith> { '..' <arith> }
+  private void procConcat() { }
+
+  // <arith> ::= <term> { ('+' | '-') <term> }
+  private void procArith() { }
+
+  // <term> ::= <factor> { ('*' | '/' | '%') <factor> }
+  private void procTerm() { }
+
+  // <factor> ::= '(' <expr> ')' | [ '-' | '#' | not] <rvalue>
+  private void procFactor() { }
+
+  // <lvalue> ::= <name> { '.' <name> | '[' <expr> ']' }
+  private void procLValue() { }
+
+  // <rvalue> ::= <const> | <function> | <table> | <lvalue>
+  private void procRValue() { }
+
+  // <const> ::= <number> | <string> | false | true | nil
+  private void procConst() { }
+
+  // <function> ::= (read | tonumber | tostring) '(' [ <expr> ] ')'
+  private void procFunction() {
+  }
+
+  // <table> ::= '{' [ <elem> { ',' <elem> } ] '}'
+  private void procTable() {
+  }
+
+  // <elem> ::= [ '[' <expr> ']' '=' ] <expr>
+  private void procElem() {
+  }
+
+  private void procName() {
+      eat(TokenType.VAR);
+  }
+
+  private void procNumber() {
+      eat(TokenType.NUMBER);
   }
 
   private void procString() {
-    eat(TokenType.STRING);
+      eat(TokenType.STRING);
   }
 
 }
