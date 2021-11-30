@@ -77,7 +77,23 @@ public class SyntaticAnalysis {
   }
 
   // <assign> ::= <lvalue> { ',' <lvalue> } '=' <expr> { ',' <expr> }
-  private void procAssign() { }
+  private void procAssign() {
+    
+    procLValue();
+    while (current.type == TokenType.COMMA) {
+      advance();
+      procLValue();
+    }
+
+    eat(TokenType.EQUAL);
+    procExpr();
+
+    while (current.type == TokenType.COMMA) {
+      advance();
+      procExpr();
+    }
+
+  }
 
   // <expr> ::= <rel> { (and | or) <rel> }
   private void procExpr() { }
