@@ -53,7 +53,26 @@ public class SyntaticAnalysis {
   private void procCmd() { }
 
   // <if> ::= if <expr> then <code> { elseif <expr> then <code> } [ else <code> ] end
-  private void procIf() { }
+  private void procIf() { 
+    eat(TokenType.IF);
+    procExpr();
+    eat(TokenType.THEN);
+    procCode();
+
+    while( current.type == TokenType.ELSE_IF) {
+      advance();
+      procExpr();
+      eat(TokenType.THEN);
+      procCode();
+    }
+
+    if (current.type == TokenType.ELSE) {
+      advance();
+      procCode();
+    }
+
+    eat(TokenType.END);
+  }
 
   // <while> ::= while <expr> do <code> end
   private void procWhile() {
@@ -78,7 +97,7 @@ public class SyntaticAnalysis {
 
   // <assign> ::= <lvalue> { ',' <lvalue> } '=' <expr> { ',' <expr> }
   private void procAssign() {
-    
+
     procLValue();
     while (current.type == TokenType.COMMA) {
       advance();
@@ -92,7 +111,6 @@ public class SyntaticAnalysis {
       advance();
       procExpr();
     }
-
   }
 
   // <expr> ::= <rel> { (and | or) <rel> }
