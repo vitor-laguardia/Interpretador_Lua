@@ -1,4 +1,5 @@
 package syntatic;
+
 import lexical.Lexeme;
 import lexical.LexicalAnalysis;
 import lexical.TokenType;
@@ -6,17 +7,19 @@ import lexical.TokenType;
 public class SyntaticAnalysis {
 
   private LexicalAnalysis lexical;
-  private Lexeme current;
+  private Lexeme current;     
 
   public SyntaticAnalysis(LexicalAnalysis lex) {
     this.lexical = lex;
     this.current = lex.nextToken();
   }
 
+  // Pedir para o analixador léxico o pŕoximo token
   private void advance() {
     current = lexical.nextToken();
   }
 
+  // validar se podemos passar para o próximo token
   private void eat(TokenType type) {
     if (type == current.type) {
       advance();
@@ -44,7 +47,9 @@ public class SyntaticAnalysis {
   }
 
   // <program>   ::= program <cmdlist>
-  private void procProgram() { }
+  private void procProgram() {
+    
+   }
 
   // <cmdlist>   ::= <cmd> { <cmd> }
   private void procCmdList() { }
