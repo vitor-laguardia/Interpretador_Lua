@@ -48,7 +48,7 @@ public class SyntaticAnalysis {
 
   // <program>   ::= program <cmdlist>
   private void procProgram() {
-    
+
    }
 
   // <cmdlist>   ::= <cmd> { <cmd> }
@@ -85,5 +85,9 @@ public class SyntaticAnalysis {
 
   // <const>     ::= number
   private void procConst() { }
+
+  private void procName() { }
+
+  private void procNumber() { }
 
 }
