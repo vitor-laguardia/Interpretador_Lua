@@ -138,7 +138,21 @@ public class SyntaticAnalysis {
   private void procRValue() { }
 
   // <const> ::= <number> | <string> | false | true | nil
-  private void procConst() { }
+  private void procConst() { 
+    if (current.type == TokenType.NUMBER) {
+      advance();
+    } else if (current.type == TokenType.STRING) {
+      advance();  
+    } else if (current.type == TokenType.FALSE) {
+      advance();
+    } else if (current.type == TokenType.TRUE) {
+      advance();
+    } else if (current.type == TokenType.NIL) {
+      advance();
+    } else {
+      showError();
+    }
+  }
 
   // <function> ::= (read | tonumber | tostring) '(' [ <expr> ] ')'
   private void procFunction() {
