@@ -86,8 +86,16 @@ public class SyntaticAnalysis {
   // <const>     ::= number
   private void procConst() { }
 
-  private void procName() { }
+  private void procName() { 
+    eat(TokenType.VAR);
+  }
 
-  private void procNumber() { }
+  private void procNumber() { 
+    eat(TokenType.NUMBER);
+  }
+
+  private void procString() {
+    eat(TokenType.STRING);
+  }
 
 }
