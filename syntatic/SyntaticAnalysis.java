@@ -1,9 +1,19 @@
 package syntatic;
-
+import interpreter.expr.BinaryIntExpr;
+import interpreter.expr.BoolExpr;
+import interpreter.expr.ConstBoolExpr;
+import interpreter.expr.ConstIntExpr;
+import interpreter.expr.IntExpr;
+import interpreter.expr.IntOp;
+import interpreter.expr.NegIntExpr;
+import interpreter.expr.NotBoolExpr;
+import interpreter.expr.ReadIntExpr;
+import interpreter.expr.RelOp;
+import interpreter.expr.SingleBoolExpr;
+import interpreter.expr.Variable;
 import lexical.Lexeme;
 import lexical.LexicalAnalysis;
 import lexical.TokenType;
-
 public class SyntaticAnalysis {
 
   private LexicalAnalysis lexical;
@@ -85,6 +95,10 @@ public class SyntaticAnalysis {
 
   // <repeat> ::= repeat <code> until <expr>
   private void procRepeat() {
+    eat(TokenType.REPEAT);
+    procCode();
+    eat(TokenType.UNTIL);
+    procExpr();
   }
 
   // <for> ::= for <name> (('=' <expr> ',' <expr> [',' <expr>]) | ([',' <name>] in <expr>)) do <code> end
@@ -93,6 +107,7 @@ public class SyntaticAnalysis {
 
   // <print> ::= print '(' [ <expr> ] ')'
   private void procPrint() {
+
   }
 
   // <assign> ::= <lvalue> { ',' <lvalue> } '=' <expr> { ',' <expr> }
@@ -117,7 +132,9 @@ public class SyntaticAnalysis {
   private void procExpr() { }
 
   // <rel> ::= <concat> [ ('<' | '>' | '<=' | '>=' | '~=' | '==') <concat> ]
-  private void procRel() { }
+  private void procRel() {
+    procConcat();
+   }
 
   // <concat> ::= <arith> { '..' <arith> }
   private void procConcat() { }
@@ -126,13 +143,45 @@ public class SyntaticAnalysis {
   private void procArith() { }
 
   // <term> ::= <factor> { ('*' | '/' | '%') <factor> }
-  private void procTerm() { }
+  private IntExpr procTerm() { 
+    procFactor();
+    IntExpr left = procFactor();
+    if(current.type == TokenType.MUL 
+      || current.type == TokenType.DIV 
+      || current.type == TokenType.DIV) {
+        int line = lexical.getLine();
+        IntOp op;
+        switch(current.type) {
+          case MUL:
+            op = IntOp.Mul;
+            break;
+          case DIV:
+            op = IntOp.Div;
+            break;
+          case MOD:
+            op = IntOp.Mod;
+            break;
+          default:
+            op = IntOp.Mod;
+            break;
+        }
+
+        advance();
+        IntExpr right = procFactor();
+        return new BinaryIntExpr(line, left, op, right);
+      } else {
+        return left;
+      }
+  }
 
   // <factor> ::= '(' <expr> ')' | [ '-' | '#' | not] <rvalue>
-  private void procFactor() { }
+  private IntExpr procFactor() { 
+    return null;
+  }
 
   // <lvalue> ::= <name> { '.' <name> | '[' <expr> ']' }
-  private void procLValue() { }
+  private void procLValue() { 
+  }
 
   // <rvalue> ::= <const> | <function> | <table> | <lvalue>
   private void procRValue() {
