@@ -92,6 +92,10 @@ public class SyntaticAnalysis {
       default:
         showError();
     }
+
+    if (current.type == TokenType.COMMA) 
+      advance();
+    
    }
 
   // <if> ::= if <expr> then <code> { elseif <expr> then <code> } [ else <code> ] end
