@@ -69,7 +69,30 @@ public class SyntaticAnalysis {
   }
 
   // <cmd> ::= (<if> | <while> | <repeat> | <for> | <print> | <assign>) [';']
-  private void procCmd() { }
+  private void procCmd() {
+    switch (current.type) {
+      case IF :
+        procIf();
+        break;
+      case WHILE:
+        procWhile();
+        break;
+      case REPEAT:
+        procRepeat();
+        break;
+      case FOR:
+        procFor();
+        break;
+      case PRINT:
+        procPrint();
+        break;
+      case ASSIGN:
+        procAssign();
+        break;
+      default:
+        showError();
+    }
+   }
 
   // <if> ::= if <expr> then <code> { elseif <expr> then <code> } [ else <code> ] end
   private void procIf() { 
