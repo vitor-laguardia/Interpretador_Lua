@@ -57,7 +57,16 @@ public class SyntaticAnalysis {
   }
 
   // <code> ::= { <cmd> }
-  private void procCode() { }
+  private void procCode() { 
+    while (current.type == TokenType.IF ||
+            current.type == TokenType.WHILE ||
+              current.type == TokenType.REPEAT ||
+                current.type == TokenType.FOR ||
+                  current.type == TokenType.PRINT ||
+                    current.type == TokenType.ASSIGN) {
+                      procCmd();
+                    } 
+  }
 
   // <cmd> ::= (<if> | <while> | <repeat> | <for> | <print> | <assign>) [';']
   private void procCmd() { }
