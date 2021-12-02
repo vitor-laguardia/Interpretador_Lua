@@ -91,6 +91,7 @@ public class SyntaticAnalysis {
         break;
       default:
         showError();
+        break;
     }
 
     if (current.type == TokenType.COMMA) 
@@ -139,6 +140,43 @@ public class SyntaticAnalysis {
 
   // <for> ::= for <name> (('=' <expr> ',' <expr> [',' <expr>]) | ([',' <name>] in <expr>)) do <code> end
   private void procFor() {
+    eat(TokenType.FOR);
+    procName();
+
+    switch (current.type) {
+      case EQUAL:
+        advance();
+        procExpr();
+        eat(TokenType.COMMA);
+        procExpr();
+
+        if (current.type == TokenType.COMMA) {
+          advance();
+          procExpr();
+        }
+        break;
+        
+      case COMMA:
+        advance();
+        procName();
+        eat(TokenType.IN);
+        procExpr();
+        break;
+      
+      case IN:
+        advance();
+        procExpr();
+        break;
+
+      default:
+        showError();
+        break;
+    }
+
+    eat(TokenType.DO);
+    procCode();
+    eat(TokenType.END);
+
   }
 
   // <print> ::= print '(' [ <expr> ] ')'
