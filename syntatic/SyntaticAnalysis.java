@@ -181,7 +181,12 @@ public class SyntaticAnalysis {
 
   // <print> ::= print '(' [ <expr> ] ')'
   private void procPrint() {
-
+    procPrint();
+    eat(TokenType.OPEN_PARENTHESES);
+    if (current.type == TokenType.OPEN_PARENTHESES) {
+      procExpr();
+    }
+    eat(TokenType.CLOSE_PARENTHESES);
   }
 
   // <assign> ::= <lvalue> { ',' <lvalue> } '=' <expr> { ',' <expr> }
