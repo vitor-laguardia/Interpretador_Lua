@@ -286,8 +286,31 @@ public class SyntaticAnalysis {
   }
 
   // <factor> ::= '(' <expr> ')' | [ '-' | '#' | not] <rvalue>
-  private IntExpr procFactor() { 
-    return null;
+  private void procFactor() { 
+    if (current.type == TokenType.OPEN_BRACKET) {
+      advance();
+      procExpr();
+      eat(TokenType.CLOSE_PARENTHESES);
+    } 
+    else if (current.type == TokenType.SUB ||
+              current.type == TokenType.HASHTAG ||
+                current.type == TokenType.NOT) {
+                  advance();
+                  procRValue();
+                }
+    else if (current.type == TokenType.NUMBER ||
+              current.type == TokenType.STRING ||
+                current.type == TokenType.FALSE ||
+                  current.type == TokenType.TRUE ||
+                    current.type == TokenType.NIL || 
+                      current.type == TokenType.READ ||
+                        current.type == TokenType.TO_NUMBER ||
+                          current.type == TokenType.TO_STRING || 
+                            current.type == TokenType.OPEN_BRACKET ||
+                              current.type == TokenType.VAR) {
+                                procRValue();
+                                }
+    else showError();
   }
 
   // <lvalue> ::= <name> { '.' <name> | '[' <expr> ']' }
