@@ -315,6 +315,17 @@ public class SyntaticAnalysis {
 
   // <lvalue> ::= <name> { '.' <name> | '[' <expr> ']' }
   private void procLValue() { 
+    procName();
+    while (current.type == TokenType.DOT || current.type == TokenType.OPEN_BRACKET) {
+      if (current.type == TokenType.DOT) {
+        advance();
+        procName();
+      } else if (current.type == TokenType.OPEN_BRACKET) {
+          advance();
+          procExpr();
+          eat(TokenType.CLOSE_BRACKET);
+      } else showError();
+    }
   }
 
   // <rvalue> ::= <const> | <function> | <table> | <lvalue>
