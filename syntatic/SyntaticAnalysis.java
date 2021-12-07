@@ -373,6 +373,28 @@ public class SyntaticAnalysis {
 
   // <function> ::= (read | tonumber | tostring) '(' [ <expr> ] ')'
   private void procFunction() {
+    if (current.type == TokenType.READ) {
+      advance();
+      eat(TokenType.OPEN_BRACKET);
+      if (current.type == TokenType.OPEN_BRACKET) {
+        procExpr();
+      } else eat(TokenType.CLOSE_BRACKET);
+
+    } else if  (current.type == TokenType.TO_NUMBER) {
+      advance();
+      eat(TokenType.OPEN_BRACKET);
+      if (current.type == TokenType.OPEN_BRACKET) {
+        procExpr();
+      } else eat(TokenType.CLOSE_BRACKET);
+
+    } else if (current.type == TokenType.TO_STRING) {
+      advance();
+      eat(TokenType.OPEN_BRACKET);
+      if (current.type == TokenType.OPEN_BRACKET) {
+        procExpr();
+      } else eat(TokenType.CLOSE_BRACKET);
+
+    } else showError();
   }
 
   // <table> ::= '{' [ <elem> { ',' <elem> } ] '}'
