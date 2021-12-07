@@ -208,7 +208,18 @@ public class SyntaticAnalysis {
   }
 
   // <expr> ::= <rel> { (and | or) <rel> }
-  private void procExpr() { }
+  private void procExpr() { 
+    procRel();
+    while(current.type == TokenType.AND || current.type == TokenType.OR) {
+      if (current.type == TokenType.AND) {
+        procRel();
+      } else if (current.type == TokenType.OR) {
+        procRel();
+      } else {
+        showError();
+      }
+    }
+  }
 
   // <rel> ::= <concat> [ ('<' | '>' | '<=' | '>=' | '~=' | '==') <concat> ]
   private void procRel() {
