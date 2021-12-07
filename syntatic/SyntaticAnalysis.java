@@ -236,7 +236,13 @@ public class SyntaticAnalysis {
    }
 
   // <concat> ::= <arith> { '..' <arith> }
-  private void procConcat() { }
+  private void procConcat() { 
+    procArith();
+    while (current.type == TokenType.CONCAT) {
+      advance();
+      procArith();
+    }
+  }
 
   // <arith> ::= <term> { ('+' | '-') <term> }
   private void procArith() { }
