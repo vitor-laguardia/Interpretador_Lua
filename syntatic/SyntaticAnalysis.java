@@ -31,6 +31,8 @@ public class SyntaticAnalysis {
 
   // validar se podemos passar para o próximo token
   private void eat(TokenType type) {
+    System.out.println("Expected (..., " + type + "), found (\"" +
+          current.token + "\", " + current.type + ")");
     if (type == current.type) {
       advance();
     } else {
