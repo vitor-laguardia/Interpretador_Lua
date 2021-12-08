@@ -86,7 +86,7 @@ public class SyntaticAnalysis {
       case PRINT:
         procPrint();
         break;
-      case ASSIGN:
+      case VAR:
         procAssign();
         break;
       default:
