@@ -315,7 +315,7 @@ public class SyntaticAnalysis {
                 current.type == TokenType.TO_STRING) {
                   procFunction();
     }
-    else if (current.type == TokenType.OPEN_BRACKET) {
+    else if (current.type == TokenType.OPEN_KEYS) {
       procTable();
     }
     else if (current.type == TokenType.VAR) {
