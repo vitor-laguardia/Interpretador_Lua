@@ -343,31 +343,73 @@ public class SyntaticAnalysis {
       showError();
     }
   }
-
+  //AQUI
   // <function> ::= (read | tonumber | tostring) '(' [ <expr> ] ')'
   private void procFunction() {
     if (current.type == TokenType.READ) {
       advance();
-      eat(TokenType.OPEN_BRACKET);
-      if (current.type == TokenType.OPEN_BRACKET) {
-        procExpr();
-      } else eat(TokenType.CLOSE_BRACKET);
-
-    } else if  (current.type == TokenType.TO_NUMBER) {
+      eat(TokenType.OPEN_PARENTHESES);
+      if (current.type == TokenType.OPEN_PARENTHESES || 
+            current.type == TokenType.SUB ||
+              current.type == TokenType.HASHTAG ||
+                current.type ==TokenType.NOT ||
+                  current.type == TokenType.NUMBER ||
+                    current.type == TokenType.STRING ||
+                      current.type == TokenType.FALSE ||
+                        current.type == TokenType.TRUE ||
+                          current.type == TokenType.NIL || 
+                            current.type == TokenType.READ ||
+                              current.type == TokenType.TO_NUMBER ||
+                                current.type == TokenType.TO_STRING || 
+                                  current.type == TokenType.OPEN_BRACKET ||
+                                    current.type == TokenType.VAR) {
+                                      procExpr();
+                                    }
+        eat(TokenType.CLOSE_PARENTHESES);
+    } 
+    else if  (current.type == TokenType.TO_NUMBER) {
       advance();
-      eat(TokenType.OPEN_BRACKET);
-      if (current.type == TokenType.OPEN_BRACKET) {
-        procExpr();
-      } else eat(TokenType.CLOSE_BRACKET);
-
-    } else if (current.type == TokenType.TO_STRING) {
+      eat(TokenType.OPEN_PARENTHESES);
+      if (current.type == TokenType.OPEN_PARENTHESES || 
+            current.type == TokenType.SUB ||
+              current.type == TokenType.HASHTAG ||
+                current.type ==TokenType.NOT ||
+                  current.type == TokenType.NUMBER ||
+                    current.type == TokenType.STRING ||
+                      current.type == TokenType.FALSE ||
+                        current.type == TokenType.TRUE ||
+                          current.type == TokenType.NIL || 
+                            current.type == TokenType.READ ||
+                              current.type == TokenType.TO_NUMBER ||
+                                current.type == TokenType.TO_STRING || 
+                                  current.type == TokenType.OPEN_BRACKET ||
+                                    current.type == TokenType.VAR) {
+                                      procExpr();
+                                    } 
+        eat(TokenType.CLOSE_PARENTHESES);
+    }
+    else if (current.type == TokenType.TO_STRING) {
       advance();
-      eat(TokenType.OPEN_BRACKET);
-      if (current.type == TokenType.OPEN_BRACKET) {
-        procExpr();
-      } else eat(TokenType.CLOSE_BRACKET);
-
-    } else showError();
+      eat(TokenType.OPEN_PARENTHESES);
+      if (current.type == TokenType.OPEN_PARENTHESES || 
+            current.type == TokenType.SUB ||
+              current.type == TokenType.HASHTAG ||
+                current.type ==TokenType.NOT ||
+                  current.type == TokenType.NUMBER ||
+                    current.type == TokenType.STRING ||
+                      current.type == TokenType.FALSE ||
+                        current.type == TokenType.TRUE ||
+                          current.type == TokenType.NIL || 
+                            current.type == TokenType.READ ||
+                              current.type == TokenType.TO_NUMBER ||
+                                current.type == TokenType.TO_STRING || 
+                                  current.type == TokenType.OPEN_BRACKET ||
+                                    current.type == TokenType.VAR) {
+                                      procExpr();
+                                    } 
+        eat(TokenType.CLOSE_PARENTHESES);
+    } 
+    else showError();
   }
 
   // <table> ::= '{' [ <elem> { ',' <elem> } ] '}'
