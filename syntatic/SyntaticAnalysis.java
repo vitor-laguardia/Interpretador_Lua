@@ -330,9 +330,9 @@ public class SyntaticAnalysis {
   // <const> ::= <number> | <string> | false | true | nil
   private void procConst() { 
     if (current.type == TokenType.NUMBER) {
-      advance();
+      procNumber();
     } else if (current.type == TokenType.STRING) {
-      advance();  
+      procString();  
     } else if (current.type == TokenType.FALSE) {
       advance();
     } else if (current.type == TokenType.TRUE) {
