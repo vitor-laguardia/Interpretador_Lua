@@ -29,6 +29,11 @@ public class SyntaticAnalysis {
     current = lexical.nextToken();
   }
 
+  public void start() {
+    procCode();
+    eat(TokenType.END_OF_FILE);
+  }
+
   // validar se podemos passar para o próximo token
   private void eat(TokenType type) {
     System.out.println("Expected (..., " + type + "), found (\"" +
@@ -60,12 +65,15 @@ public class SyntaticAnalysis {
 
   // <code> ::= { <cmd> }
   private void procCode() { 
+    if (current.type == TokenType.COMMENTARY) {
+      current = lexical.nextToken();
+    }
     while (current.type == TokenType.IF ||
             current.type == TokenType.WHILE ||
               current.type == TokenType.REPEAT ||
                 current.type == TokenType.FOR ||
                   current.type == TokenType.PRINT ||
-                    current.type == TokenType.ASSIGN) {
+                    current.type == TokenType.VAR) {
                       procCmd();
                     } 
   }

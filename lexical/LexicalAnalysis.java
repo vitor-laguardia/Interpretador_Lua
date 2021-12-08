@@ -272,7 +272,7 @@ public class LexicalAnalysis implements AutoCloseable {
       lexeme.type = symbolTable.find(lexeme.token);
     } 
 
-    System.out.println("TOKEN: " + lexeme.token + " TYPE: " + lexeme.type); 
+    //System.out.println("TOKEN: " + lexeme.token + " TYPE: " + lexeme.type); 
 
     return lexeme;
   }
