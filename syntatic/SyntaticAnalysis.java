@@ -1,16 +1,16 @@
 package syntatic;
-import interpreter.expr.BinaryIntExpr;
-import interpreter.expr.BoolExpr;
-import interpreter.expr.ConstBoolExpr;
-import interpreter.expr.ConstIntExpr;
-import interpreter.expr.IntExpr;
-import interpreter.expr.IntOp;
-import interpreter.expr.NegIntExpr;
-import interpreter.expr.NotBoolExpr;
-import interpreter.expr.ReadIntExpr;
-import interpreter.expr.RelOp;
-import interpreter.expr.SingleBoolExpr;
-import interpreter.expr.Variable;
+// import interpreter.expr.BinaryIntExpr;
+// import interpreter.expr.BoolExpr;
+// import interpreter.expr.ConstBoolExpr;
+// import interpreter.expr.ConstIntExpr;
+// import interpreter.expr.IntExpr;
+// import interpreter.expr.IntOp;
+// import interpreter.expr.NegIntExpr;
+// import interpreter.expr.NotBoolExpr;
+// import interpreter.expr.ReadIntExpr;
+// import interpreter.expr.RelOp;
+// import interpreter.expr.SingleBoolExpr;
+// import interpreter.expr.Variable;
 import lexical.Lexeme;
 import lexical.LexicalAnalysis;
 import lexical.TokenType;
@@ -191,7 +191,6 @@ public class SyntaticAnalysis {
 
   // <assign> ::= <lvalue> { ',' <lvalue> } '=' <expr> { ',' <expr> }
   private void procAssign() {
-
     procLValue();
     while (current.type == TokenType.COMMA) {
       advance();
