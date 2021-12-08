@@ -96,7 +96,7 @@ public class SyntaticAnalysis {
 
     if (current.type == TokenType.COMMA) 
       advance();
-    
+
    }
 
   // <if> ::= if <expr> then <code> { elseif <expr> then <code> } [ else <code> ] end
@@ -181,7 +181,7 @@ public class SyntaticAnalysis {
 
   // <print> ::= print '(' [ <expr> ] ')'
   private void procPrint() {
-    procPrint();
+    eat(TokenType.PRINT);
     eat(TokenType.OPEN_PARENTHESES);
     if (current.type == TokenType.OPEN_PARENTHESES) {
       procExpr();
