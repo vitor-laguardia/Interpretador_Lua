@@ -210,13 +210,8 @@ public class SyntaticAnalysis {
   private void procExpr() { 
     procRel();
     while(current.type == TokenType.AND || current.type == TokenType.OR) {
-      if (current.type == TokenType.AND) {
-        procRel();
-      } else if (current.type == TokenType.OR) {
-        procRel();
-      } else {
-        showError();
-      }
+      advance();
+      procRel();
     }
   }
 
