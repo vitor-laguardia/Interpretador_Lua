@@ -258,6 +258,7 @@ public class SyntaticAnalysis {
               }
   }
 
+  // ERRADO CORRIGIR OPEN BRACKET
   // <factor> ::= '(' <expr> ')' | [ '-' | '#' | not] <rvalue>
   private void procFactor() { 
     if (current.type == TokenType.OPEN_BRACKET) {
@@ -415,8 +416,23 @@ public class SyntaticAnalysis {
   // <table> ::= '{' [ <elem> { ',' <elem> } ] '}'
   private void procTable() {
     eat(TokenType.OPEN_KEYS);
-    if (current.type == TokenType.OPEN_BRACKET || current.type == TokenType.OPEN_PARENTHESES) {
-      procElem();
+    if (current.type == TokenType.OPEN_BRACKET ||
+         current.type == TokenType.OPEN_PARENTHESES ||
+          current.type == TokenType.SUB ||
+            current.type == TokenType.HASHTAG ||
+              current.type ==TokenType.NOT ||
+                current.type == TokenType.NUMBER ||
+                  current.type == TokenType.STRING ||
+                    current.type == TokenType.FALSE ||
+                      current.type == TokenType.TRUE ||
+                        current.type == TokenType.NIL || 
+                          current.type == TokenType.READ ||
+                            current.type == TokenType.TO_NUMBER ||
+                              current.type == TokenType.TO_STRING || 
+                                current.type == TokenType.OPEN_BRACKET ||
+                                  current.type == TokenType.VAR) {
+                                    procElem();
+                                  
       while (current.type == TokenType.COMMA) {
         advance();
         procElem();
