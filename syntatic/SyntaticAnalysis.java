@@ -399,6 +399,15 @@ public class SyntaticAnalysis {
 
   // <table> ::= '{' [ <elem> { ',' <elem> } ] '}'
   private void procTable() {
+    eat(TokenType.OPEN_KEYS);
+    if (current.type == TokenType.OPEN_BRACKET || current.type == TokenType.OPEN_PARENTHESES) {
+      procElem();
+      while (current.type == TokenType.COMMA) {
+        advance();
+        procElem();
+      }
+    }
+    eat(TokenType.CLOSE_KEYS);
   }
 
   // <elem> ::= [ '[' <expr> ']' '=' ] <expr>
