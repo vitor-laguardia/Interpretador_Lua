@@ -432,12 +432,11 @@ public class SyntaticAnalysis {
                                 current.type == TokenType.OPEN_BRACKET ||
                                   current.type == TokenType.VAR) {
                                     procElem();
-                                  
-      while (current.type == TokenType.COMMA) {
-        advance();
-        procElem();
-      }
-    }
+                                    while (current.type == TokenType.COMMA) {
+                                      advance();
+                                      procElem();
+                                    }
+                                  }
     eat(TokenType.CLOSE_KEYS);
   }
 
