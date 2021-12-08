@@ -261,7 +261,7 @@ public class SyntaticAnalysis {
   // ERRADO CORRIGIR OPEN BRACKET
   // <factor> ::= '(' <expr> ')' | [ '-' | '#' | not] <rvalue>
   private void procFactor() { 
-    if (current.type == TokenType.OPEN_BRACKET) {
+    if (current.type == TokenType.OPEN_PARENTHESES) {
       advance();
       procExpr();
       eat(TokenType.CLOSE_PARENTHESES);
