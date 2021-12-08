@@ -412,6 +412,13 @@ public class SyntaticAnalysis {
 
   // <elem> ::= [ '[' <expr> ']' '=' ] <expr>
   private void procElem() {
+    if (current.type == TokenType.OPEN_BRACKET) {
+      advance();
+      procExpr();
+      eat(TokenType.CLOSE_BRACKET);
+      eat(TokenType.ASSIGN);
+    }
+    procExpr();
   }
 
   private void procName() {
