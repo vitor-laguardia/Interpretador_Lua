@@ -254,35 +254,14 @@ public class SyntaticAnalysis {
   }
 
   // <term> ::= <factor> { ('*' | '/' | '%') <factor> }
-  private IntExpr procTerm() { 
+  private void procTerm() { 
     procFactor();
-    IntExpr left = procFactor();
-    if(current.type == TokenType.MUL 
-      || current.type == TokenType.DIV 
-      || current.type == TokenType.DIV) {
-        int line = lexical.getLine();
-        IntOp op;
-        switch(current.type) {
-          case MUL:
-            op = IntOp.Mul;
-            break;
-          case DIV:
-            op = IntOp.Div;
-            break;
-          case MOD:
-            op = IntOp.Mod;
-            break;
-          default:
-            op = IntOp.Mod;
-            break;
-        }
-
-        advance();
-        IntExpr right = procFactor();
-        return new BinaryIntExpr(line, left, op, right);
-      } else {
-        return left;
-      }
+    while (current.type == TokenType.MUL || 
+            current.type == TokenType.DIV || 
+              current.type == TokenType.MOD) {
+                advance();
+                procFactor();
+              }
   }
 
   // <factor> ::= '(' <expr> ')' | [ '-' | '#' | not] <rvalue>
