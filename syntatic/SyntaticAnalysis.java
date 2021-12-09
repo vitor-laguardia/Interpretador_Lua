@@ -38,10 +38,7 @@ public class SyntaticAnalysis {
   private void eat(TokenType type) {
     System.out.println("Expected (..., " + type + "), found (\"" +
           current.token + "\", " + current.type + ")");
-    if (current.type == TokenType.COMMENTARY) {
-      current = lexical.nextToken();
-      advance();
-    }
+
     if (type == current.type) {
       advance();
     } else {
@@ -69,15 +66,13 @@ public class SyntaticAnalysis {
 
   // <code> ::= { <cmd> }
   private void procCode() { 
-    if (current.type == TokenType.COMMENTARY) {
-      current = lexical.nextToken();
-    }
     while (current.type == TokenType.IF ||
             current.type == TokenType.WHILE ||
               current.type == TokenType.REPEAT ||
                 current.type == TokenType.FOR ||
                   current.type == TokenType.PRINT ||
-                    current.type == TokenType.VAR) {
+                    current.type == TokenType.VAR ||
+                      current.type == TokenType.COMMENTARY) {
                       procCmd();
                     } 
   }
@@ -102,6 +97,9 @@ public class SyntaticAnalysis {
         break;
       case VAR:
         procAssign();
+        break;
+      case COMMENTARY:
+        advance();
         break;
       default:
         showError();
@@ -197,9 +195,22 @@ public class SyntaticAnalysis {
   private void procPrint() {
     eat(TokenType.PRINT);
     eat(TokenType.OPEN_PARENTHESES);
-    if (current.type == TokenType.OPEN_PARENTHESES) {
-      procExpr();
-    }
+    if (current.type == TokenType.OPEN_PARENTHESES ||
+          current.type == TokenType.SUB ||
+            current.type == TokenType.HASHTAG ||
+              current.type == TokenType.NOT ||
+                current.type == TokenType.NUMBER ||
+                  current.type == TokenType.STRING ||
+                    current.type == TokenType.FALSE ||
+                      current.type == TokenType.TRUE ||
+                        current.type == TokenType.NIL || 
+                          current.type == TokenType.READ ||
+                            current.type == TokenType.TO_NUMBER ||
+                              current.type == TokenType.TO_STRING || 
+                                current.type == TokenType.OPEN_KEYS ||
+                                  current.type == TokenType.VAR) {
+                                    procExpr();
+                                  }
     eat(TokenType.CLOSE_PARENTHESES);
   }
 
@@ -220,6 +231,7 @@ public class SyntaticAnalysis {
     }
   }
 
+  // TAMO AQUI
   // <expr> ::= <rel> { (and | or) <rel> }
   private void procExpr() { 
     procRel();
@@ -376,7 +388,7 @@ public class SyntaticAnalysis {
                             current.type == TokenType.READ ||
                               current.type == TokenType.TO_NUMBER ||
                                 current.type == TokenType.TO_STRING || 
-                                  current.type == TokenType.OPEN_BRACKET ||
+                                  current.type == TokenType.OPEN_KEYS ||
                                     current.type == TokenType.VAR) {
                                       procExpr();
                                     }
@@ -397,7 +409,7 @@ public class SyntaticAnalysis {
                             current.type == TokenType.READ ||
                               current.type == TokenType.TO_NUMBER ||
                                 current.type == TokenType.TO_STRING || 
-                                  current.type == TokenType.OPEN_BRACKET ||
+                                  current.type == TokenType.OPEN_KEYS ||
                                     current.type == TokenType.VAR) {
                                       procExpr();
                                     } 
@@ -418,7 +430,7 @@ public class SyntaticAnalysis {
                             current.type == TokenType.READ ||
                               current.type == TokenType.TO_NUMBER ||
                                 current.type == TokenType.TO_STRING || 
-                                  current.type == TokenType.OPEN_BRACKET ||
+                                  current.type == TokenType.OPEN_KEYS ||
                                     current.type == TokenType.VAR) {
                                       procExpr();
                                     } 
@@ -443,7 +455,7 @@ public class SyntaticAnalysis {
                           current.type == TokenType.READ ||
                             current.type == TokenType.TO_NUMBER ||
                               current.type == TokenType.TO_STRING || 
-                                current.type == TokenType.OPEN_BRACKET ||
+                                current.type == TokenType.OPEN_KEYS ||
                                   current.type == TokenType.VAR) {
                                     procElem();
                                     while (current.type == TokenType.COMMA) {
