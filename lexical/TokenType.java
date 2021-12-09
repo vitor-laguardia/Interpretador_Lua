@@ -20,6 +20,7 @@ public enum TokenType {
 	IN,        			// in
 	DO,        			// do
 	END,       			// end
+	NOT,				// not
 
 	// Logic operators
 	EQUAL,         			// ==

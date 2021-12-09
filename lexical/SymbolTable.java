@@ -23,6 +23,7 @@ public class SymbolTable {
 		symbolTable.put("in", TokenType.IN);	
 		symbolTable.put("do", TokenType.DO);	
 		symbolTable.put("end", TokenType.END);	
+		symbolTable.put("not", TokenType.NOT);
 
 		// Logic operators
 		symbolTable.put("==", TokenType.EQUAL);	
