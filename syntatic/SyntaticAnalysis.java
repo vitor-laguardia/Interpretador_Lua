@@ -156,7 +156,7 @@ public class SyntaticAnalysis {
     procName();
 
     switch (current.type) {
-      case EQUAL:
+      case ASSIGN:
         advance();
         procExpr();
         eat(TokenType.COMMA);
@@ -346,7 +346,7 @@ public class SyntaticAnalysis {
       procTable();
     }
     else if (current.type == TokenType.VAR) {
-      procName();
+      procLValue();
     }
     else {
       showError();
