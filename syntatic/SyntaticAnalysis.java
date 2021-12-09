@@ -38,6 +38,10 @@ public class SyntaticAnalysis {
   private void eat(TokenType type) {
     System.out.println("Expected (..., " + type + "), found (\"" +
           current.token + "\", " + current.type + ")");
+    if (current.type == TokenType.COMMENTARY) {
+      current = lexical.nextToken();
+      advance();
+    }
     if (type == current.type) {
       advance();
     } else {
@@ -207,7 +211,7 @@ public class SyntaticAnalysis {
       procLValue();
     }
 
-    eat(TokenType.EQUAL);
+    eat(TokenType.ASSIGN);
     procExpr();
 
     while (current.type == TokenType.COMMA) {
@@ -290,7 +294,7 @@ public class SyntaticAnalysis {
                       current.type == TokenType.READ ||
                         current.type == TokenType.TO_NUMBER ||
                           current.type == TokenType.TO_STRING || 
-                            current.type == TokenType.OPEN_BRACKET ||
+                            current.type == TokenType.OPEN_KEYS ||
                               current.type == TokenType.VAR) {
                                 procRValue();
                                 }
