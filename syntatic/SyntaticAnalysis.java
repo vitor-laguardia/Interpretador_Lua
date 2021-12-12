@@ -1,4 +1,6 @@
 package syntatic;
+import javax.management.StringValueExp;
+
 // import interpreter.expr.BinaryIntExpr;
 // import interpreter.expr.BoolExpr;
 // import interpreter.expr.ConstBoolExpr;
@@ -478,15 +480,18 @@ public class SyntaticAnalysis {
   }
 
   private void procName() {
-      eat(TokenType.VAR);
+    eat(TokenType.VAR);
   }
 
   private void procNumber() {
-      eat(TokenType.NUMBER);
+    eat(TokenType.NUMBER);
   }
 
-  private void procString() {
-      eat(TokenType.STRING);
+  private StringValue procString() {
+    String tmp = current.token;
+    eat(TokenType.STRING);
+    StringValue sv = new StringValue(tmp);
+    return sv;
   }
 
 }
