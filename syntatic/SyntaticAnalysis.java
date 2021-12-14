@@ -1,6 +1,9 @@
 package syntatic;
+import java.util.ArrayList;
+
 import javax.management.StringValueExp;
 
+import interpreter.command.BlocksCommand;
 import interpreter.command.PrintCommand;
 // import interpreter.expr.BinaryIntExpr;
 // import interpreter.expr.BoolExpr;
@@ -68,7 +71,9 @@ public class SyntaticAnalysis {
   }
 
   // <code> ::= { <cmd> }
-  private void procCode() { 
+  private BlocksCommand procCode() { 
+    int line = lexical.getLine();
+    List<Command> cmds = new ArrayList<Command>();
     while (current.type == TokenType.IF ||
             current.type == TokenType.WHILE ||
               current.type == TokenType.REPEAT ||
@@ -76,8 +81,12 @@ public class SyntaticAnalysis {
                   current.type == TokenType.PRINT ||
                     current.type == TokenType.VAR ||
                       current.type == TokenType.COMMENTARY) {
-                      procCmd();
+                      Command cmd = procCmd();
+                      cmds.add(cmd);
                     } 
+      BlocksCommand bc = new BlocksCommand(line, cmds);
+
+      return bc;
   }
 
   // <cmd> ::= (<if> | <while> | <repeat> | <for> | <print> | <assign>) [';']
