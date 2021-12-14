@@ -194,9 +194,11 @@ public class SyntaticAnalysis {
   }
 
   // <print> ::= print '(' [ <expr> ] ')'
-  private void procPrint() {
+  private Expr procPrint() {
     eat(TokenType.PRINT);
     eat(TokenType.OPEN_PARENTHESES);
+
+    Expr expr = null;
     if (current.type == TokenType.OPEN_PARENTHESES ||
           current.type == TokenType.SUB ||
             current.type == TokenType.HASHTAG ||
@@ -211,9 +213,11 @@ public class SyntaticAnalysis {
                               current.type == TokenType.TO_STRING || 
                                 current.type == TokenType.OPEN_KEYS ||
                                   current.type == TokenType.VAR) {
-                                    procExpr();
+                                    expr = procExpr();
                                   }
     eat(TokenType.CLOSE_PARENTHESES);
+    
+    return expr;
   }
 
   // <assign> ::= <lvalue> { ',' <lvalue> } '=' <expr> { ',' <expr> }
@@ -240,7 +244,7 @@ public class SyntaticAnalysis {
       advance();
       procRel();
     }
-    
+
     return expr;
   }
 
