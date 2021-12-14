@@ -36,8 +36,8 @@ public class SyntaticAnalysis {
 
   // Pedir para o analixador léxico o pŕoximo token
   private void advance() {
-    System.out.println("Advanced (\"" + current.token + "\", " + 
-      current.type + ")");
+    // System.out.println("Advanced (\"" + current.token + "\", " + 
+    //   current.type + ")");
 
     current = lexical.nextToken();
   }
@@ -51,8 +51,8 @@ public class SyntaticAnalysis {
 
   // validar se podemos passar para o próximo token
   private void eat(TokenType type) {
-    System.out.println("Expected (..., " + type + "), found (\"" +
-          current.token + "\", " + current.type + ")");
+    // System.out.println("Expected (..., " + type + "), found (\"" +
+    //       current.token + "\", " + current.type + ")");
 
     if (type == current.type) {
       advance();
@@ -115,7 +115,7 @@ public class SyntaticAnalysis {
         procFor();
         break;
       case PRINT:
-        procPrint();
+        cmd = procPrint();
         break;
       case VAR:
         procAssign();
