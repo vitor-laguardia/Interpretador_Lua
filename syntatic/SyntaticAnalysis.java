@@ -34,13 +34,15 @@ public class SyntaticAnalysis {
   private void advance() {
     System.out.println("Advanced (\"" + current.token + "\", " + 
       current.type + ")");
-      
+
     current = lexical.nextToken();
   }
 
-  public void start() {
-    procCode();
+  public Command start() {
+    BlocksCommand cmds = procCode();
     eat(TokenType.END_OF_FILE);
+
+    return cmds;
   }
 
   // validar se podemos passar para o próximo token
