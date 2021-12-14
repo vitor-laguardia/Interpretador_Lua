@@ -1,6 +1,7 @@
 package interpreter.command;
 
 import interpreter.expr.Expr;
+import interpreter.value.Value;
 
 public class PrintCommand extends Command {
 
@@ -13,7 +14,8 @@ public class PrintCommand extends Command {
 
     @Override
     public void execute () {
-        System.out.println("cheguei aq menorzada");
+        Value<?> v = expr.expr();
+        System.out.println(v.toString());
     }
 
 }
