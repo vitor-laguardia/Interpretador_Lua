@@ -1,10 +1,14 @@
 package syntatic;
 import java.util.ArrayList;
-
-import javax.management.StringValueExp;
+import java.util.List;
 
 import interpreter.command.BlocksCommand;
+import interpreter.command.Command;
 import interpreter.command.PrintCommand;
+import interpreter.expr.ConstExpr;
+import interpreter.expr.Expr;
+import interpreter.value.StringValue;
+import interpreter.value.Value;
 // import interpreter.expr.BinaryIntExpr;
 // import interpreter.expr.BoolExpr;
 // import interpreter.expr.ConstBoolExpr;
@@ -234,7 +238,7 @@ public class SyntaticAnalysis {
                                     expr = procExpr();
                                   }
     eat(TokenType.CLOSE_PARENTHESES);
-    PrintCommand pc = PrintCommand(line, expr);
+    PrintCommand pc = new PrintCommand(line, expr);
 
     return pc;
   }
@@ -413,6 +417,8 @@ public class SyntaticAnalysis {
     } else {
       showError();
     }
+
+    return v;
   }
   //AQUI
   // <function> ::= (read | tonumber | tostring) '(' [ <expr> ] ')'
@@ -533,6 +539,7 @@ public class SyntaticAnalysis {
     String tmp = current.token;
     eat(TokenType.STRING);
     StringValue sv = new StringValue(tmp);
+
     return sv;
   }
 
