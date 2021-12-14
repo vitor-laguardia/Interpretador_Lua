@@ -253,9 +253,10 @@ public class SyntaticAnalysis {
                 current.type == TokenType.NOT_EQUAL ||
                   current.type == TokenType.EQUAL) {
                     advance();
+                    // VERIFICAR
                     expr = procConcat();
                   }
-                  
+
       return expr;
    }
 
