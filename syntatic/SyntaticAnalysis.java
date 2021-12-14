@@ -81,7 +81,8 @@ public class SyntaticAnalysis {
   }
 
   // <cmd> ::= (<if> | <while> | <repeat> | <for> | <print> | <assign>) [';']
-  private void procCmd() {
+  private Command procCmd() {
+    Command cmd = null;
     switch (current.type) {
       case IF :
         procIf();
@@ -112,6 +113,7 @@ public class SyntaticAnalysis {
     if (current.type == TokenType.COMMA) 
       advance();
 
+    return cmd;
    }
 
   // <if> ::= if <expr> then <code> { elseif <expr> then <code> } [ else <code> ] end
