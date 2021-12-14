@@ -288,7 +288,8 @@ public class SyntaticAnalysis {
 
   // ERRADO CORRIGIR OPEN BRACKET
   // <factor> ::= '(' <expr> ')' | [ '-' | '#' | not] <rvalue>
-  private void procFactor() { 
+  private Expr procFactor() { 
+    Expr expr = null;
     if (current.type == TokenType.OPEN_PARENTHESES) {
       advance();
       procExpr();
@@ -298,7 +299,7 @@ public class SyntaticAnalysis {
               current.type == TokenType.HASHTAG ||
                 current.type == TokenType.NOT) {
                   advance();
-                  procRValue();
+                  expr = procRValue();
                 }
     else if (current.type == TokenType.NUMBER ||
               current.type == TokenType.STRING ||
@@ -310,9 +311,11 @@ public class SyntaticAnalysis {
                           current.type == TokenType.TO_STRING || 
                             current.type == TokenType.OPEN_KEYS ||
                               current.type == TokenType.VAR) {
-                                procRValue();
+                                expr = procRValue();
                                 }
     else showError();
+
+      return expr;                         
   }
 
   // <lvalue> ::= <name> { '.' <name> | '[' <expr> ']' }
@@ -331,8 +334,8 @@ public class SyntaticAnalysis {
   }
 
   // <rvalue> ::= <const> | <function> | <table> | <lvalue>
-  private Exp procRValue() {
-    Exp expr = null; 
+  private Expr procRValue() {
+    Expr expr = null; 
     if (current.type == TokenType.NUMBER ||
           current.type == TokenType.STRING ||
             current.type == TokenType.FALSE ||
