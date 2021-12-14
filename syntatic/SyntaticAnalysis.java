@@ -1,6 +1,7 @@
 package syntatic;
 import javax.management.StringValueExp;
 
+import interpreter.command.PrintCommand;
 // import interpreter.expr.BinaryIntExpr;
 // import interpreter.expr.BoolExpr;
 // import interpreter.expr.ConstBoolExpr;
@@ -194,8 +195,9 @@ public class SyntaticAnalysis {
   }
 
   // <print> ::= print '(' [ <expr> ] ')'
-  private Expr procPrint() {
+  private PrintCommand procPrint() {
     eat(TokenType.PRINT);
+    int line = lexical.getLine();
     eat(TokenType.OPEN_PARENTHESES);
 
     Expr expr = null;
@@ -216,8 +218,9 @@ public class SyntaticAnalysis {
                                     expr = procExpr();
                                   }
     eat(TokenType.CLOSE_PARENTHESES);
-    
-    return expr;
+    PrintCommand pc = PrintCommand(line, expr);
+
+    return pc;
   }
 
   // <assign> ::= <lvalue> { ',' <lvalue> } '=' <expr> { ',' <expr> }
