@@ -267,12 +267,14 @@ public class SyntaticAnalysis {
   }
 
   // <arith> ::= <term> { ('+' | '-') <term> }
-  private void procArith() { 
-    procTerm();
+  private Expr procArith() { 
+    Expr expr = procTerm();
     while (current.type == TokenType.ADD || current.type == TokenType.SUB) {
       advance();
       procTerm();
     }
+
+    return expr;
   }
 
   // <term> ::= <factor> { ('*' | '/' | '%') <factor> }
@@ -284,7 +286,7 @@ public class SyntaticAnalysis {
                 advance();
                 procFactor();
               }  
-                     
+
     return expr;
   }
 
