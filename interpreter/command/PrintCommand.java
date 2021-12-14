@@ -1,5 +1,7 @@
 package interpreter.command;
 
+import interpreter.expr.Expr;
+
 public class PrintCommand extends Command {
 
     private Expr expr;

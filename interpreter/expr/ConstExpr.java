@@ -1,4 +1,6 @@
-package interpreter;
+package interpreter.expr;
+
+import interpreter.value.Value;
 
 public class ConstExpr extends Expr {
 
