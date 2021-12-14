@@ -276,17 +276,18 @@ public class SyntaticAnalysis {
   }
 
   // <term> ::= <factor> { ('*' | '/' | '%') <factor> }
-  private void procTerm() { 
-    procFactor();
+  private Expr procTerm() { 
+    Expr expr = procFactor();
     while (current.type == TokenType.MUL || 
             current.type == TokenType.DIV || 
               current.type == TokenType.MOD) {
                 advance();
                 procFactor();
-              }
+              }  
+                     
+    return expr;
   }
 
-  // ERRADO CORRIGIR OPEN BRACKET
   // <factor> ::= '(' <expr> ')' | [ '-' | '#' | not] <rvalue>
   private Expr procFactor() { 
     Expr expr = null;
