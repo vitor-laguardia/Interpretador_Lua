@@ -32,6 +32,9 @@ public class SyntaticAnalysis {
 
   // Pedir para o analixador léxico o pŕoximo token
   private void advance() {
+    System.out.println("Advanced (\"" + current.token + "\", " + 
+      current.type + ")");
+      
     current = lexical.nextToken();
   }
 
