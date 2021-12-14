@@ -233,14 +233,15 @@ public class SyntaticAnalysis {
     }
   }
 
-  // TAMO AQUI
   // <expr> ::= <rel> { (and | or) <rel> }
-  private void procExpr() { 
-    procRel();
+  private Expr procExpr() { 
+    Expr expr = procRel();   
     while(current.type == TokenType.AND || current.type == TokenType.OR) {
       advance();
       procRel();
     }
+    
+    return expr;
   }
 
   // <rel> ::= <concat> [ ('<' | '>' | '<=' | '>=' | '~=' | '==') <concat> ]
