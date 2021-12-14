@@ -361,7 +361,8 @@ public class SyntaticAnalysis {
     else {
       showError();
     }
-    
+
+    return expr;
   }
 
   // <const> ::= <number> | <string> | false | true | nil
