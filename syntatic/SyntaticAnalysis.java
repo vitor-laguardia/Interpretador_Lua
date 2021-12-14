@@ -244,8 +244,8 @@ public class SyntaticAnalysis {
   }
 
   // <rel> ::= <concat> [ ('<' | '>' | '<=' | '>=' | '~=' | '==') <concat> ]
-  private void procRel() {
-    procConcat();
+  private Expr procRel() {
+    Expr expr = procConcat();
     if (current.type == TokenType.LOWER ||
           current.type == TokenType.GREATER ||
             current.type == TokenType.LOWER_EQUAL ||
@@ -253,8 +253,10 @@ public class SyntaticAnalysis {
                 current.type == TokenType.NOT_EQUAL ||
                   current.type == TokenType.EQUAL) {
                     advance();
-                    procConcat();
+                    expr = procConcat();
                   }
+                  
+      return expr;
    }
 
   // <concat> ::= <arith> { '..' <arith> }
