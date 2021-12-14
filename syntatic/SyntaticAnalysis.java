@@ -341,9 +341,8 @@ public class SyntaticAnalysis {
 
                   Value<?> v = procConst();
                   int line = lexical.getLine();
-                  ConstExpr ce = new ConstExpr(line,v);
-                  expr = ce;    
-                                   
+                  expr = new ConstExpr(line,v);
+
                 }
     else if (current.type == TokenType.READ ||
               current.type == TokenType.TO_NUMBER ||
