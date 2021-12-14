@@ -357,11 +357,12 @@ public class SyntaticAnalysis {
   }
 
   // <const> ::= <number> | <string> | false | true | nil
-  private void procConst() { 
+  private Value<?> procConst() { 
+    Value<?> v = null;
     if (current.type == TokenType.NUMBER) {
       procNumber();
     } else if (current.type == TokenType.STRING) {
-      procString();  
+      v = procString();  
     } else if (current.type == TokenType.FALSE) {
       advance();
     } else if (current.type == TokenType.TRUE) {
