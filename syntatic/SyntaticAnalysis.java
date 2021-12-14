@@ -331,13 +331,17 @@ public class SyntaticAnalysis {
   }
 
   // <rvalue> ::= <const> | <function> | <table> | <lvalue>
-  private void procRValue() {
+  private Exp procRValue() {
+    Exp expr = null; 
     if (current.type == TokenType.NUMBER ||
           current.type == TokenType.STRING ||
             current.type == TokenType.FALSE ||
               current.type == TokenType.TRUE ||
                 current.type == TokenType.NIL) {
-                  procConst();
+                  Value<?> v = procConst();
+                  int line = lexical.getLine();
+                  ConstExpr ce = new ConstExpr(line,v);
+                  expr = ce;         
                 }
     else if (current.type == TokenType.READ ||
               current.type == TokenType.TO_NUMBER ||
