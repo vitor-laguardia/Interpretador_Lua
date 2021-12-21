@@ -7,6 +7,7 @@ import interpreter.command.Command;
 import interpreter.command.PrintCommand;
 import interpreter.expr.ConstExpr;
 import interpreter.expr.Expr;
+import interpreter.expr.Variable;
 import interpreter.value.BooleanValue;
 import interpreter.value.NumberValue;
 import interpreter.value.StringValue;
@@ -531,8 +532,12 @@ public class SyntaticAnalysis {
     procExpr();
   }
 
-  private void procName() {
+  private Variable procName() {
+    String tmp = current.token;
     eat(TokenType.VAR);
+    int line = lexical.getLine();
+    Variable var = new Variable(line, tmp);
+    return var;
   }
 
   private NumberValue procNumber() {
