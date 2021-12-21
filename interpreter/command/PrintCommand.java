@@ -18,7 +18,10 @@ public class PrintCommand extends Command {
             System.out.println();
         else {
             Value<?> v = expr.expr();
-            System.out.println(v.toString());
+            if (v == null)
+                System.out.println("nill");
+            else
+                System.out.println(v.toString());
         }
     }
 
