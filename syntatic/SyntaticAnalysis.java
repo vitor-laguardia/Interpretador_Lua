@@ -128,7 +128,7 @@ public class SyntaticAnalysis {
         break;
     }
 
-    if (current.type == TokenType.COMMA) 
+    if (current.type == TokenType.SEMICOLON) 
       advance();
 
     return cmd;
