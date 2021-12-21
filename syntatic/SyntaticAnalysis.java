@@ -7,6 +7,8 @@ import interpreter.command.Command;
 import interpreter.command.PrintCommand;
 import interpreter.expr.ConstExpr;
 import interpreter.expr.Expr;
+import interpreter.value.BooleanValue;
+import interpreter.value.NumberValue;
 import interpreter.value.StringValue;
 import interpreter.value.Value;
 // import interpreter.expr.BinaryIntExpr;
@@ -405,13 +407,15 @@ public class SyntaticAnalysis {
   private Value<?> procConst() { 
     Value<?> v = null;
     if (current.type == TokenType.NUMBER) {
-      procNumber();
+      v = procNumber();
     } else if (current.type == TokenType.STRING) {
       v = procString();  
     } else if (current.type == TokenType.FALSE) {
       advance();
+      v = new BooleanValue(false);
     } else if (current.type == TokenType.TRUE) {
       advance();
+      v = new BooleanValue(true);
     } else if (current.type == TokenType.NIL) {
       advance();
     } else {
@@ -531,8 +535,12 @@ public class SyntaticAnalysis {
     eat(TokenType.VAR);
   }
 
-  private void procNumber() {
+  private NumberValue procNumber() {
+    String tmp = current.token;
     eat(TokenType.NUMBER);
+    Double d = Double.valueOf(tmp);
+    NumberValue nv = new NumberValue(d);
+    return nv;
   }
 
   private StringValue procString() {
